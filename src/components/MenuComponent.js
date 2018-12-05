@@ -8,12 +8,14 @@ class Menu extends Component {
     super(props);
 
     this.state = {
-      selectedDish: null
+      selectedDish: null,
+      selectedComments: null
     }
   }
 
   onDishSelect(dish) {
     this.setState({selectedDish: dish});
+    this.setState({selectedComments: dish.comments});
   }
 
   render () {
@@ -36,7 +38,7 @@ class Menu extends Component {
         <div className="row">
           {menu}
         </div>
-        <DishDetail selectedDish={this.state.selectedDish}/>
+        <DishDetail selectedDish={this.state.selectedDish} selectedComments={this.state.selectedComments}/>
       </div>
     );
   }
