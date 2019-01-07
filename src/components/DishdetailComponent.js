@@ -15,7 +15,7 @@ function RenderDish({selectedDish}) {
   );
 }
 
-function RenderComments({selectedComments}) {
+function RenderComments({selectedComments, addComment, dishId}) {
   const comment = selectedComments.map((selectedComment) => {
     return (
       <div key={selectedComment.id}>
@@ -58,8 +58,11 @@ const DishDetail = (props) => {
             <RenderDish selectedDish={props.dish} />
           </div>
           <div className="col-12 col-md-5 m-1">
-            <RenderComments selectedComments={props.comments} />
-            <CommentForm />
+            <RenderComments selectedComments={props.comments}
+              addComment={props.addComment}
+              dishId={props.dish.id} />
+            <CommentForm addComment={props.addComment}
+              dishId={props.dish.id}/>
           </div>
         </div>
       </div>
