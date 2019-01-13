@@ -3,11 +3,12 @@ import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbIte
 import { Link } from 'react-router-dom';
 import CommentForm from './CommentForm';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 function RenderDish({selectedDish}) {
   return (
     <Card>
-      <CardImg width="100%" src={selectedDish.image} alt={selectedDish.name} />
+      <CardImg width="100%" src={baseUrl + selectedDish.image} alt={selectedDish.name} />
       <CardBody>
         <CardTitle>{selectedDish.name}</CardTitle>
         <CardText>{selectedDish.description}</CardText>
@@ -16,7 +17,7 @@ function RenderDish({selectedDish}) {
   );
 }
 
-function RenderComments({selectedComments, addComment, dishId}) {
+function RenderComments({selectedComments, postComment, dishId}) {
   const comment = selectedComments.map((selectedComment) => {
     return (
       <div key={selectedComment.id}>
@@ -76,9 +77,9 @@ const DishDetail = (props) => {
           </div>
           <div className="col-12 col-md-5 m-1">
             <RenderComments selectedComments={props.comments}
-              addComment={props.addComment}
+              postComment={props.postComment}
               dishId={props.dish.id} />
-            <CommentForm addComment={props.addComment}
+            <CommentForm postComment={props.postComment}
               dishId={props.dish.id}/>
           </div>
         </div>
