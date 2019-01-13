@@ -4,36 +4,46 @@ import { Link } from 'react-router-dom';
 import CommentForm from './CommentForm';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 function RenderDish({selectedDish}) {
   return (
-    <Card>
-      <CardImg width="100%" src={baseUrl + selectedDish.image} alt={selectedDish.name} />
-      <CardBody>
-        <CardTitle>{selectedDish.name}</CardTitle>
-        <CardText>{selectedDish.description}</CardText>
-      </CardBody>
-    </Card>
+    <FadeTransform in 
+        transformProps={{
+          exitTransform: 'scale(0.5) translateY(-50%)'
+        }}>
+      <Card>
+        <CardImg width="100%" src={baseUrl + selectedDish.image} alt={selectedDish.name} />
+        <CardBody>
+          <CardTitle>{selectedDish.name}</CardTitle>
+          <CardText>{selectedDish.description}</CardText>
+        </CardBody>
+      </Card>
+    </FadeTransform>
   );
 }
 
 function RenderComments({selectedComments, postComment, dishId}) {
   const comment = selectedComments.map((selectedComment) => {
     return (
-      <div key={selectedComment.id}>
-        <p>{selectedComment.comment}</p>
-        <p>-- {selectedComment.author}, {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(selectedComment.date)))}</p>
-      </div>
+      <Fade in>
+        <div key={selectedComment.id}>
+          <p>{selectedComment.comment}</p>
+          <p>-- {selectedComment.author}, {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(selectedComment.date)))}</p>
+        </div>
+      </Fade>
     );
   });
 
   return (
-    <div>
-      <h4>Comments</h4>
+    <Stagger in>
       <div>
-        {comment}
+        <h4>Comments</h4>
+        <div>
+          {comment}
+        </div>
       </div>
-    </div>
+    </Stagger>
   );
 }
 
