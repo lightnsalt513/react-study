@@ -3,28 +3,33 @@ import RenderLeader from './RenderleaderComponent';
 import { Loading } from './LoadingComponent';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Stagger } from 'react-animation-components';
 
 function About(props) {
 
-    const leaders = () => {
-      if (props.isLoading) {
+    const renderEachLeader = () => {
+      if (props.leaders.isLoading) {
         return(
           <Loading />
         );
       }
-      else if (props.errMess) {
+      else if (props.leaders.errMess) {
         return(
-          <p>{props.errMess}</p>
+          <p>{props.leaders.errMess}</p>
         );
       }
       else {
-        props.leaders.leaders.map((leader) => {
+        const result = props.leaders.leaders.map((leader) => {
             return (
-              <RenderLeader leader={leader}/>
+                <Stagger in>
+                  <RenderLeader leader={leader} />
+                </Stagger>
             );
         });
+
+        return result;
       }
-    }
+    };
 
     return(
         <div className="container">
@@ -80,9 +85,9 @@ function About(props) {
                 <div className="col-12">
                     <h2>Corporate Leadership</h2>
                 </div>
-                <div className="col-12">
+                <div className="col-12"> 
                     <Media list>
-                      { leaders }
+                      { renderEachLeader() }
                     </Media>
                 </div>
             </div>
